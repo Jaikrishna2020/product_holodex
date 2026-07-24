@@ -1,6 +1,7 @@
 name: first_ci
 on:
   push:
+    branches: [main]
   pull_request:
 jobs:
   check:
