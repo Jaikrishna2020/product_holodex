@@ -16,3 +16,6 @@ build/
 
 # OS / editor cruft
 .DS_Store
+
+# Scratch code - rough work for understanding
+scratch.py
