@@ -32,7 +32,8 @@ def test_ill_conditioned():
     our_normal_solution = product_holodex.core.linalg.lstsq(A, b, "normal")
     err_qr = np.linalg.norm(our_qr_solution - np_solution, 1)
     err_normal = np.linalg.norm(our_normal_solution - np_solution, 1)
+    np_norm = np.linalg.norm(np_solution, 1)
 
-    assert err_qr < 1e-6
-    assert err_normal > 1e-4
+    assert err_qr / np_norm < 1e-7
+    assert err_normal / np_norm > 1e-4
     assert err_normal / err_qr > 1e3
