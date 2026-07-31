@@ -3,10 +3,8 @@ import pytest
 
 import product_holodex.core.linalg
 
-METHODS = ["normal", "qr"]
 
-
-@pytest.mark.parametrize("method", METHODS)
+@pytest.mark.parametrize("method", product_holodex.core.linalg.METHODS)
 def test_well_conditioned(method):
     rng = np.random.default_rng(0)
     A = rng.standard_normal((15, 3))
@@ -37,3 +35,18 @@ def test_ill_conditioned():
     assert err_qr / np_norm < 1e-7
     assert err_normal / np_norm > 1e-4
     assert err_normal / err_qr > 1e3
+
+
+RANK_DEFICIENT_A = np.array([[1.0, 1.0], [1.0, 1.0]])
+RANK_DEFICIENT_b = np.array([2.0, 0.0])
+
+
+@pytest.mark.parametrize("method", ["normal", "qr"])
+def test_rank_deficient_raises(method):
+    with pytest.raises(np.linalg.LinAlgError):
+        product_holodex.core.linalg.lstsq(RANK_DEFICIENT_A, RANK_DEFICIENT_b, method)
+
+
+def test_rank_deficient_svd_returns_min_norm():
+    x = product_holodex.core.linalg.lstsq(RANK_DEFICIENT_A, RANK_DEFICIENT_b, "svd")
+    assert np.allclose(x, [0.5, 0.5])
