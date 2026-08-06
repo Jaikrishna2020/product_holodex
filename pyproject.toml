@@ -18,8 +18,11 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     "matplotlib>=3.11.1",
-    "pathlib>=1.0.1",
     "pre-commit>=4.6.1",
     "pytest>=9.1.1",
     "ruff>=0.16.0",
 ]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "NPY", "RUF"]
+ignore = ["E501"]
