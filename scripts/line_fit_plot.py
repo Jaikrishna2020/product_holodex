@@ -26,6 +26,7 @@ def main():
     plt.legend()
 
     OUTPUT_DIR = Path(__file__).resolve().parent.parent / "plots"
+    OUTPUT_DIR.mkdir(exist_ok=True)
     plt.savefig(OUTPUT_DIR / "line_fit_plot.png", dpi=150, bbox_inches="tight")
     plt.show()
 
